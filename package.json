@@ -1,14 +1,17 @@
 {
-
-    "private": true,
     "name": "bogey",
-    "description": "Bogey - Web server log visualization",
+    "description": "Bogey - Web server log visualization that runs in the browser.",
     "version": "0.0.1",
 
-    "author": ["Aaron Baluczynski", "Graham Floyd"],
+    "contributors": [
+        { "name": "Aaron Baluczynski" },
+        { "name": "Graham Floyd" }
+    ],
 
     "dependencies": {
-        "socket.io": 	"0.9.13"
-    }
+        "socket.io": "0.9.x"
+    },
+
+    "private": true
 
 }
