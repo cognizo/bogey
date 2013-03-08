@@ -1,0 +1,14 @@
+{
+
+    "private": true,
+    "name": "bogey",
+    "description": "Webs erver log visualization",
+    "version": "0.0.1",
+
+    "author": ["Aaron Baluczynski", "Graham Floyd"],
+
+    "dependencies": {
+        "socket.io": 	"0.9.13"
+    }
+
+}
