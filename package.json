@@ -2,7 +2,7 @@
 
     "private": true,
     "name": "bogey",
-    "description": "Webs erver log visualization",
+    "description": "Bogey - Web server log visualization",
     "version": "0.0.1",
 
     "author": ["Aaron Baluczynski", "Graham Floyd"],
