@@ -9,10 +9,10 @@
     ],
 
     "dependencies": {
+        "underscore": "1.4.x",
         "socket.io": "0.9.x",
         "nconf": "0.6.x"
     },
 
     "private": true
-
 }

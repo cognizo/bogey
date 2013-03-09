@@ -1,10 +1,12 @@
 'use strict';
 
-var fs = require('fs'),
+var _ = require('underscore'),
+    fs = require('fs'),
     childProcess = require('child_process'),
     app = require('http').createServer(handler),
     io = require('socket.io').listen(app),
-    nconf = require('nconf');
+    nconf = require('nconf'),
+    dns = require('dns');
 
 nconf.file({ file: 'config.json' });
 
@@ -42,8 +44,19 @@ for (var i in logs) {
     var tail = childProcess.spawn('tail', ['-f', logs[i]]);
 
     tail.stdout.on('data', function(data) {
-        var url = getUrl(data.toString());
-        io.sockets.emit('news', url);
+        var parsedData = parseLine(data.toString());
+
+        try {
+            dns.reverse(parsedData.ipAddress, function (err, results) {
+                if (!err && results && results[0]) {
+                    parsedData.ipAddress = results[0];
+                }
+
+                emit(parsedData);
+            });
+        } catch (err) {
+            emit(parsedData);
+        }
     });
 }
 
@@ -58,3 +71,39 @@ function getUrl(line) {
 
     return null;
 }
+
+function emit(data) {
+    io.sockets.emit('news', data);
+}
+
+var parseLine = function (line) {
+    var words = line.split(' '),
+        quotedString = false,
+        strings = [];
+
+    _.each(words, function (word) {
+        if (word.substring(0, 1) === '"') {
+            quotedString = word + ' ';
+        } else if (quotedString) {
+            if (word.substring(word.length - 1) === '"') {
+                quotedString += word;
+                strings.push(quotedString);
+                quotedString = false;
+            } else {
+                quotedString += word + ' ';
+            }
+        } else {
+            strings.push(word);
+        }
+    });
+
+    strings = _.map(strings, function (string) {
+        return string.replace(/"/g, '').replace(/\n/g, '');
+    });
+
+    return {
+        'ipAddress': strings[0],
+        'url': getUrl(line),
+        'statusCode': strings[6]
+    };
+};
