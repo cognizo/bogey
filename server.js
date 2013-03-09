@@ -1,24 +1,33 @@
+'use strict';
+
 var fs = require('fs'),
     childProcess = require('child_process'),
     app = require('http').createServer(handler),
-    io = require('socket.io').listen(app);
+    io = require('socket.io').listen(app),
+    nconf = require('nconf');
 
-if (!process.env.LOG_FILE) {
-    console.error('LOG_FILE is undefined.');
+nconf.file({ file: 'config.json' });
+
+nconf.defaults({
+    logs: [],
+    port: 8008
+});
+
+var logs = nconf.get('logs');
+
+if (!logs.length) {
+    console.error('Logs is not defined.');
     return;
 }
 
-var logFile = process.env.LOG_FILE;
+app.listen(nconf.get('port'));
 
-console.log('Tailing ' + logFile);
-
-app.listen(8008);
-
-function handler (req, res) {
+function handler(req, res) {
     var url = req.url === '/' ? '/index.html' : req.url;
 
-    fs.readFile(__dirname + '/public' + url,
-        function (err, data) {
+    fs.readFile(
+        __dirname + '/public' + url,
+        function(err, data) {
             if (err) {
                 res.writeHead(500);
                 return res.end('Error loading page');
@@ -29,29 +38,21 @@ function handler (req, res) {
         });
 }
 
-function emit(msg) {
-    var clients = io.sockets.clients();
+for (var i in logs) {
+    var tail = childProcess.spawn('tail', ['-f', logs[i]]);
 
-    for (var i in clients)
-    {
-        clients[i].emit('news', msg);
-    }
+    tail.stdout.on('data', function(data) {
+        var url = getUrl(data.toString());
+        io.sockets.emit('news', url);
+    });
 }
-
-var tail = childProcess.spawn('tail', ['-f', logFile]);
-
-tail.stdout.on('data', function(data) {
-    var url = getUrl(data.toString());
-    emit(url);
-});
 
 function getUrl(line) {
     var pattern = /"(GET|POST) ([^ ]+) /;
 
     var match = pattern.exec(line);
 
-    if (match && match[2])
-    {
+    if (match && match[2]) {
         return match[2];
     }
 
