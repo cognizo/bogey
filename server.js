@@ -3,8 +3,8 @@
 var _ = require('underscore'),
     fs = require('fs'),
     childProcess = require('child_process'),
-    app = require('http').createServer(handler),
-    io = require('socket.io').listen(app),
+    express = require('express'),
+    io = require('socket.io'),
     nconf = require('nconf'),
     dns = require('dns');
 
@@ -22,23 +22,13 @@ if (!logs.length) {
     return;
 }
 
-app.listen(nconf.get('port'));
+var app = express();
 
-function handler(req, res) {
-    var url = req.url === '/' ? '/index.html' : req.url;
+app.use(express.static(__dirname + '/public'));
 
-    fs.readFile(
-        __dirname + '/public' + url,
-        function(err, data) {
-            if (err) {
-                res.writeHead(500);
-                return res.end('Error loading page');
-            }
+var server = app.listen(nconf.get('port'));
 
-            res.writeHead(200);
-            res.end(data);
-        });
-}
+io = io.listen(server);
 
 for (var i in logs) {
     var tail = childProcess.spawn('tail', ['-f', logs[i]]);
