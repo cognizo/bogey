@@ -19,7 +19,7 @@ var logs = nconf.get('logs');
 
 if (!logs.length) {
     console.error('Logs is not defined.');
-    return;
+    process.exit();
 }
 
 var app = express();
@@ -28,7 +28,7 @@ app.use(express.static(__dirname + '/public'));
 
 var server = app.listen(nconf.get('port'));
 
-io = io.listen(server);
+io = io.listen(server, { log: false });
 
 for (var i in logs) {
     var tail = childProcess.spawn('tail', ['-f', logs[i]]);
