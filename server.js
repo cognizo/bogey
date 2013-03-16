@@ -6,7 +6,8 @@ var _ = require('underscore'),
     express = require('express'),
     io = require('socket.io'),
     nconf = require('nconf'),
-    dns = require('dns');
+    dns = require('dns'),
+    routes = require('./routes');
 
 nconf.file({ file: 'config.json' });
 
@@ -23,7 +24,7 @@ if (!logs.length) {
 }
 
 var app = express();
-
+app.get('/', routes.index);
 app.use(express.static(__dirname + '/public'));
 
 var server = app.listen(nconf.get('port'));

@@ -1,0 +1,14 @@
+doctype 5
+html
+    head
+        title Bogey
+        link(rel='stylesheet', href='/css/default.css')
+    body
+        h1 Bogey
+
+        ul#visualizations.clearfix
+            each vis in visualizations
+                li
+                    a(href=vis.url)
+                        img(src=vis.thumbnail)
+                        div=vis.name
