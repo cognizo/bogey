@@ -1,0 +1,70 @@
+@import url('http://fonts.googleapis.com/css?family=PT+Sans+Narrow');
+@import url('reset.css');
+
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    background: #232c31;
+    color: white;
+    font-family: 'PT Sans Narrow', sans-serif;
+}
+
+h1 {
+    font-size: 70px;
+    display: block;
+    height: 100px;
+    line-height: 100px;
+    text-transform: uppercase;
+    padding-left: 30px;
+}
+
+#visualizations {
+    padding: 30px 30px 0 30px;
+    background: #595959;
+}
+
+#visualizations li {
+    float: left;
+    display: block;
+    list-style-type: none;
+    margin: 0 30px 30px 0;
+    width: 244px;
+}
+
+#visualizations li img {
+    width: 240px;
+    height: 135px;
+}
+
+#visualizations li a {
+    display: block;
+    color: #e5e5e5;
+    text-decoration: none;
+}
+
+#visualizations li a div {
+    font-size: 30px;
+    line-height: 30px;
+    padding-top: 10px;
+    text-transform: uppercase;
+}
+
+#visualizations li a:hover div {
+    color: white;
+}
