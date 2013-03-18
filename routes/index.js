@@ -1,5 +1,6 @@
 var _ = require('underscore'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 exports.index = function(req, res) {
     var visualizationsDir = __dirname + '/../public/visualizations/';
@@ -22,4 +23,20 @@ exports.index = function(req, res) {
             res.render('index.jade', { visualizations: visualizations });
         }
     });
+};
+
+var js = [
+    '/domready/ready.min.js',
+    '/underscore/underscore-min.js'
+];
+
+exports.js = function(req, res) {
+    var p,
+        index = js.indexOf(req.url);
+    if (index > -1) {
+        p = path.normalize(__dirname + '/../node_modules' + js[index]);
+        res.sendfile(p);
+    } else {
+        res.send(404);
+    }
 };

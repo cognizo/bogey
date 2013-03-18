@@ -26,6 +26,7 @@ if (!logs.length) {
 var app = express();
 app.get('/', routes.index);
 app.use(express.static(__dirname + '/public'));
+app.use('/js/', routes.js);
 
 var server = app.listen(nconf.get('port'));
 
