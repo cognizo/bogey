@@ -68,7 +68,7 @@
             requestsSinceLastTime = 0;
             requestsLastTime = time;
         }
-        fire('frame', { count: frames, time: time - startTime, delta: delta });
+        fire('frame', { count: frames, time: (time - startTime) / 1000, delta: delta / 1000 });
         lastFrameTime = time;
         window.requestAnimationFrame(arguments.callee);
     });
