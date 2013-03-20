@@ -9,13 +9,8 @@
         startTime,
         lastFrameTime,
         now = function() { return (new Date()).getTime(); },
+        $window = $(window),
         socket = io.connect();
-
-    domready(function() {
-        canvas = document.getElementById('visualize');
-        canvas.height = window.innerHeight;
-        canvas.width = window.innerWidth;
-    });
 
     var Bogey = {
         on: function(event, callback) {
@@ -74,4 +69,13 @@
     });
 
     window.Bogey = Bogey;
+
+    $(document).ready(function() {
+        canvas = $('canvas').get(0);
+        $window.on('resize', function() {
+            canvas.height = $window.height();
+            canvas.width = $window.width();
+        }).triggerHandler('resize');
+        fire('start');
+    });
 })();

@@ -3,12 +3,17 @@ html
     head
         title Bogey
         link(rel='stylesheet', href='/css/default.css')
+        script(type='text/javascript', src='//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js')
+        script(type='text/javascript', src='/socket.io/socket.io.js')
+        script(type='text/javascript', src='/js/underscore/underscore-min.js')
+        script(type='text/javascript', src='/js/polyfill.js')
+        script(type='text/javascript', src='/js/client.js')
     body
-        h1 Bogey
+        #home
+            h1 Bogey
 
-        ul#visualizations.clearfix
-            each vis in visualizations
-                li
-                    a(href=vis.url)
+            ul#visualizations.clearfix
+                each vis in visualizations
+                    li(data-id=vis.id, data-title=vis.name)
                         img(src=vis.thumbnail)
                         div=vis.name

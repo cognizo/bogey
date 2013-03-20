@@ -12,7 +12,7 @@ exports.index = function(req, res) {
                     jsonFile = visualizationsDir + dir + '/bogey.json';
                     if (fs.existsSync(jsonFile)) {
                         json = JSON.parse(fs.readFileSync(jsonFile));
-                        json.url = '/visualizations/' + dir;
+                        json.id = dir;
                         json.thumbnail = '/visualizations/' + dir + '/' + json.thumbnail;
                         visualizations.push(json);
                     }
@@ -25,8 +25,12 @@ exports.index = function(req, res) {
     });
 };
 
+exports.canvas = function(req, res) {
+    var id = req.url.substr(1);
+    res.render('canvas.jade', { js: '/visualizations/' + id + '/client.js' });
+};
+
 var js = [
-    '/domready/ready.min.js',
     '/underscore/underscore-min.js'
 ];
 

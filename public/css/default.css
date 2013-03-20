@@ -25,6 +25,10 @@ html, body {
     font-family: 'PT Sans Narrow', sans-serif;
 }
 
+#home {
+    display: none;
+}
+
 h1 {
     font-size: 70px;
     display: block;
@@ -45,6 +49,7 @@ h1 {
     list-style-type: none;
     margin: 0 30px 30px 0;
     width: 244px;
+    color: #e5e5e5;
 }
 
 #visualizations li img {
@@ -52,19 +57,24 @@ h1 {
     height: 135px;
 }
 
-#visualizations li a {
-    display: block;
-    color: #e5e5e5;
-    text-decoration: none;
-}
-
-#visualizations li a div {
+#visualizations li div {
     font-size: 30px;
     line-height: 30px;
     padding-top: 10px;
     text-transform: uppercase;
 }
 
-#visualizations li a:hover div {
+#visualizations li:hover {
+    cursor: pointer;
     color: white;
+}
+
+iframe {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
 }
