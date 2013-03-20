@@ -7,7 +7,8 @@ var _ = require('underscore'),
     io = require('socket.io'),
     nconf = require('nconf'),
     dns = require('dns'),
-    routes = require('./routes');
+    routes = require('./routes'),
+    parseLine = require('./lib/parse').parseLine;
 
 nconf.file({ file: 'config.json' });
 
@@ -53,50 +54,6 @@ for (var i in logs) {
     });
 }
 
-function getUrl(line) {
-    var pattern = /"(GET|POST) ([^ ]+) /;
-
-    var match = pattern.exec(line);
-
-    if (match && match[2]) {
-        return match[2];
-    }
-
-    return null;
-}
-
 function emit(data) {
     io.sockets.emit('news', data);
 }
-
-var parseLine = function (line) {
-    var words = line.split(' '),
-        quotedString = false,
-        strings = [];
-
-    _.each(words, function (word) {
-        if (word.substring(0, 1) === '"') {
-            quotedString = word + ' ';
-        } else if (quotedString) {
-            if (word.substring(word.length - 1) === '"') {
-                quotedString += word;
-                strings.push(quotedString);
-                quotedString = false;
-            } else {
-                quotedString += word + ' ';
-            }
-        } else {
-            strings.push(word);
-        }
-    });
-
-    strings = _.map(strings, function (string) {
-        return string.replace(/"/g, '').replace(/\n/g, '');
-    });
-
-    return {
-        'ipAddress': strings[0],
-        'url': getUrl(line),
-        'statusCode': strings[6]
-    };
-};
