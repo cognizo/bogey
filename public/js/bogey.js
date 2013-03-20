@@ -33,7 +33,7 @@
         return canvas;
     });
 
-    function fire(event) {
+    function trigger(event) {
         var i, args = Array.prototype.slice.call(arguments);
         args.shift();
         if (events[event]) {
@@ -43,8 +43,8 @@
         }
     }
 
-    socket.on('news', function (data) {
-        fire('request', data);
+    socket.on('req', function (data) {
+        trigger('request', data);
         requestsSinceLastTime++;
     });
 
@@ -63,7 +63,7 @@
             requestsSinceLastTime = 0;
             requestsLastTime = time;
         }
-        fire('frame', { count: frames, time: (time - startTime) / 1000, delta: delta / 1000 });
+        trigger('frame', { count: frames, time: (time - startTime) / 1000, delta: delta / 1000 });
         lastFrameTime = time;
         window.requestAnimationFrame(arguments.callee);
     });
@@ -76,6 +76,6 @@
             canvas.height = $window.height();
             canvas.width = $window.width();
         }).triggerHandler('resize');
-        fire('start');
+        trigger('start');
     });
 })();

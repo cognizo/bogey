@@ -33,7 +33,7 @@ var server = app.listen(nconf.get('port'));
 io = io.listen(server, { log: false });
 
 function emit(data) {
-    io.sockets.emit('news', data);
+    io.sockets.emit('req', data);
 }
 
 if (config.ipsum) {
