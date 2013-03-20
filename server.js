@@ -1,25 +1,23 @@
 'use strict';
 
-var _ = require('underscore'),
-    fs = require('fs'),
-    childProcess = require('child_process'),
-    express = require('express'),
+var express = require('express'),
     io = require('socket.io'),
     nconf = require('nconf'),
-    dns = require('dns'),
     routes = require('./routes'),
-    parseLine = require('./lib/parse').parseLine;
+    middleman = require('./lib/middleman'),
+    ipsum = require('./lib/ipsum');
 
 nconf.file({ file: 'config.json' });
 
 nconf.defaults({
     logs: [],
-    port: 8008
+    port: 8008,
+    ipsum: false
 });
 
-var logs = nconf.get('logs');
+var config = nconf.get();
 
-if (!logs.length) {
+if (!config.logs.length && !confs.ipsum) {
     console.error('Logs is not defined.');
     process.exit();
 }
@@ -34,26 +32,12 @@ var server = app.listen(nconf.get('port'));
 
 io = io.listen(server, { log: false });
 
-for (var i in logs) {
-    var tail = childProcess.spawn('tail', ['-f', logs[i]]);
-
-    tail.stdout.on('data', function(data) {
-        var parsedData = parseLine(data.toString());
-
-        try {
-            dns.reverse(parsedData.ipAddress, function (err, results) {
-                if (!err && results && results[0]) {
-                    parsedData.ipAddress = results[0];
-                }
-
-                emit(parsedData);
-            });
-        } catch (err) {
-            emit(parsedData);
-        }
-    });
-}
-
 function emit(data) {
     io.sockets.emit('news', data);
+}
+
+if (config.ipsum) {
+    ipsum.emit(emit);
+} else {
+    middleman.tail(config.logs, emit);
 }
