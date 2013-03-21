@@ -1,6 +1,7 @@
 (function() {
     var events = {},
         canvas,
+        paused = false,
         fps = 0,
         rpms = 0,
         frames = 0,
@@ -9,6 +10,9 @@
         startTime,
         lastFrameTime,
         now = function() { return (new Date()).getTime(); },
+        keys = {
+            space: 32
+        },
         $window = $(window),
         socket = io.connect();
 
@@ -44,7 +48,9 @@
     }
 
     socket.on('req', function (data) {
-        trigger('request', data);
+        if (!paused) {
+            trigger('request', data);
+        }
         requestsSinceLastTime++;
     });
 
@@ -54,16 +60,21 @@
             lastFrameTime = startTime;
             requestsLastTime = startTime;
         }
+
         var time = now(),
             delta = time - lastFrameTime;
-        frames++;
-        fps = Math.round(1000 / (delta ? delta : 1));
-        if (frames % 20 === 0) {
-            rpms = Math.ceil(requestsSinceLastTime / (time - requestsLastTime) * 1000);
-            requestsSinceLastTime = 0;
-            requestsLastTime = time;
+
+        if (!paused) {
+            frames++;
+            fps = Math.round(1000 / (delta ? delta : 1));
+            if (frames % 20 === 0) {
+                rpms = Math.ceil(requestsSinceLastTime / (time - requestsLastTime) * 1000);
+                requestsSinceLastTime = 0;
+                requestsLastTime = time;
+            }
+            trigger('frame', { count: frames, time: (time - startTime) / 1000, delta: delta / 1000 });
         }
-        trigger('frame', { count: frames, time: (time - startTime) / 1000, delta: delta / 1000 });
+
         lastFrameTime = time;
         window.requestAnimationFrame(arguments.callee);
     });
@@ -77,5 +88,11 @@
             canvas.width = $window.width();
         }).triggerHandler('resize');
         trigger('start');
+    });
+
+    $(window).on('keypress', function(event) {
+        if (event.which === keys.space) {
+            paused = !paused;
+        }
     });
 })();
