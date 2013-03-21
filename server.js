@@ -12,12 +12,12 @@ nconf.file({ file: 'config.json' });
 nconf.defaults({
     logs: [],
     port: 8008,
-    ipsum: false
+    ipsum: 0
 });
 
 var config = nconf.get();
 
-if (!config.logs.length && !confs.ipsum) {
+if (!config.logs.length && !config.ipsum) {
     console.error('Logs is not defined.');
     process.exit();
 }
@@ -37,7 +37,7 @@ function emit(data) {
 }
 
 if (config.ipsum) {
-    ipsum.emit(emit);
+    ipsum.tail(config.ipsum, emit);
 } else {
     middleman.tail(config.logs, emit);
 }
