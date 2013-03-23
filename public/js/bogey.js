@@ -79,8 +79,8 @@
 
         if (!paused) {
             frames++;
-            fps = Math.round(1000 / (delta ? delta : 1));
-            if (frames % 20 === 0) {
+            if (frames % 10 === 0) {
+                fps = Math.round(1000 / (delta ? delta : 1));
                 rpms = Math.ceil(requestsSinceLastTime / (time - requestsLastTime) * 1000);
                 requestsSinceLastTime = 0;
                 requestsLastTime = time;
@@ -117,7 +117,7 @@
         }, 0);
     });
 
-    $(window).on('keypress', function(event) {
+    $window.on('keypress', function(event) {
         switch (event.which) {
             case keys.space:
                 trigger(paused ? 'play' : 'pause');
