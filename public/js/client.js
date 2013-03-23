@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
     var $iframe,
-        $home = $('#home');
+        $home = $('#home'),
+        homeState = { action: 'home' };
 
     function load(state) {
         if (state.action === 'home') {
@@ -13,19 +14,25 @@ $(document).ready(function() {
         }
     }
 
-    (function() {
+    // Closes the current visualizations
+    function home() {
+        history.pushState(homeState, null, '/#home');
+        load(homeState);
+    }
+
+    $(window).on('hashchange', function() {
         var state;
-        if (window.location.hash) {
+        if (window.location.hash && window.location.hash !== '#home') {
             state = {
                 action: 'visualize',
                 id: window.location.hash.substr(1)
             }
         } else {
-            state = { action: 'home' }
+            state = homeState;
         }
-        history.replaceState(state, null, state.id ? '/#' + state.id : '');
+        history.replaceState(state, null, state.id ? '/#' + state.id : '/#home');
         load(state);
-    })();
+    }).triggerHandler('hashchange');
 
     window.addEventListener('popstate', function(event) {
         // First load
@@ -54,7 +61,12 @@ $(document).ready(function() {
         } else {
             $iframe = $('<iframe>')
                 .on('load', function() {
-                    $(this).show().contents().find('canvas').removeClass('hidden');
+                    $iframe.show().contents().find('canvas').removeClass('hidden');
+                    setTimeout(function() {
+                        var contentWindow = $iframe.get(0).contentWindow;
+                        contentWindow.Bogey.onClose(home);
+                        $(contentWindow).focus(); // For key events
+                    }, 0); // Next tick for Firefox
                 })
                 .attr('src', '/canvas/' + state.id)
                 .appendTo('body');

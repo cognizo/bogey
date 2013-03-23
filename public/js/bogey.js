@@ -10,8 +10,15 @@
         startTime,
         lastFrameTime,
         now = function() { return (new Date()).getTime(); },
+        close = null,
         keys = {
-            space: 32
+            space: 32,
+            q: 113,
+            f: 102,
+            r: 114,
+            zero: 48,
+            plus: 43,
+            minus: 95
         },
         $window = $(window),
         socket = io.connect();
@@ -22,6 +29,9 @@
                 events[event] = [];
             }
             events[event].push(callback);
+        },
+        onClose: function(func) {
+            close = func;
         }
     };
 
@@ -105,8 +115,30 @@
     });
 
     $(window).on('keypress', function(event) {
-        if (event.which === keys.space) {
-            paused = !paused;
+        switch (event.which) {
+            case keys.space:
+                trigger(paused ? 'play' : 'pause');
+                paused = !paused;
+                break;
+            case keys.q:
+                trigger('close');
+                if (close) close();
+                break;
+            case keys.f:
+                trigger('toggleFps');
+                break;
+            case keys.r:
+                trigger('toggleRpms');
+                break;
+            case keys.zero:
+                trigger('defaultSpeed');
+                break;
+            case keys.minus:
+                trigger('slowDown');
+                break;
+            case keys.plus:
+                trigger('speedUp');
+                break;
         }
     });
 })();
