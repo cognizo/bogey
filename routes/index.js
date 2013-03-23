@@ -1,23 +1,32 @@
 var _ = require('underscore'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    visualizationsDir = __dirname + '/../public/visualizations/';
+
+function getConfigJson(id) {
+    var jsonFile, json;
+    try {
+        jsonFile = visualizationsDir + id + '/bogey.json';
+        if (fs.existsSync(jsonFile)) {
+            json = JSON.parse(fs.readFileSync(jsonFile));
+            json.id = id;
+            json.thumbnail = '/visualizations/' + id + '/' + json.thumbnail;
+            return json;
+        }
+    } catch(e) {
+        console.error(e);
+    }
+    return false;
+}
 
 exports.index = function(req, res) {
-    var visualizationsDir = __dirname + '/../public/visualizations/';
-    var json, jsonFile, visualizations = [];
+    var json, visualizations = [];
     fs.readdir(visualizationsDir, function(error, dirs) {
         if (!error) {
             _.each(dirs, function(dir) {
-                try {
-                    jsonFile = visualizationsDir + dir + '/bogey.json';
-                    if (fs.existsSync(jsonFile)) {
-                        json = JSON.parse(fs.readFileSync(jsonFile));
-                        json.id = dir;
-                        json.thumbnail = '/visualizations/' + dir + '/' + json.thumbnail;
-                        visualizations.push(json);
-                    }
-                } catch(e) {
-                    console.error(e);
+                json = getConfigJson(dir);
+                if (json) {
+                    visualizations.push(json);
                 }
             });
             res.render('index.jade', { visualizations: visualizations });
@@ -26,8 +35,16 @@ exports.index = function(req, res) {
 };
 
 exports.canvas = function(req, res) {
-    var id = req.url.substr(1);
-    res.render('canvas.jade', { js: '/visualizations/' + id + '/client.js' });
+    var id = req.url.substr(1),
+        path = '/visualizations/' + id + '/',
+        json = getConfigJson(id),
+        files = json.js || [];
+
+    _.each(files, function(file, i) {
+        files[i] = path + file;
+    });
+
+    res.render('canvas.jade', { js: path + 'client.js', files: files });
 };
 
 var js = [
