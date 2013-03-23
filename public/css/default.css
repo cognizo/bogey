@@ -26,7 +26,12 @@ html, body {
 }
 
 #home {
-    display: none;
+    -webkit-transition: opacity .7s;
+    transition: opacity .7s;
+}
+
+#home.hidden {
+   opacity: 0;
 }
 
 h1 {

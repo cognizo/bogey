@@ -5,10 +5,10 @@ $(document).ready(function() {
 
     function load(state) {
         if (state.action === 'home') {
-            $home.show();
+            $home.removeClass('hidden');
             visualize(state);
         } else {
-            $home.hide();
+            $home.addClass('hidden');
             visualize(state);
         }
     }
@@ -45,13 +45,16 @@ $(document).ready(function() {
     function visualize(state) {
         if (state.action === 'home') {
             if ($iframe) {
-                $iframe.remove();
-                $iframe = null;
+                $iframe.contents().find('canvas')
+                    .addClass('hidden')
+                    .on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {
+                        $iframe.remove();
+                    });
             }
         } else {
             $iframe = $('<iframe>')
                 .on('load', function() {
-                    $(this).show();
+                    $(this).show().contents().find('canvas').removeClass('hidden');
                 })
                 .attr('src', '/canvas/' + state.id)
                 .appendTo('body');

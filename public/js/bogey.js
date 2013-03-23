@@ -81,13 +81,27 @@
 
     window.Bogey = Bogey;
 
-    $(document).ready(function() {
+    function resize() {
+        canvas.height = $window.height();
+        canvas.width = $window.width();
+    }
+
+    var firstResize = true; // Don't fire needless resize event just after load
+
+    $window.on('load', function() {
         canvas = $('canvas').get(0);
         $window.on('resize', function() {
-            canvas.height = $window.height();
-            canvas.width = $window.width();
-        }).triggerHandler('resize');
-        trigger('start');
+            if (!firstResize) {
+                resize();
+                trigger('resize');
+            }
+            firstResize = false;
+        });
+
+        setTimeout(function() {
+            resize();
+            trigger('start');
+        }, 0);
     });
 
     $(window).on('keypress', function(event) {
