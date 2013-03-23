@@ -37,7 +37,7 @@ function emit(data) {
 }
 
 if (config.ipsum) {
-    ipsum.tail(config.ipsum, emit);
+    ipsum.tail(config, emit);
 } else {
-    middleman.tail(config.logs, emit);
+    middleman.tail(config, emit);
 }
