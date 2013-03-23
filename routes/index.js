@@ -36,12 +36,14 @@ exports.index = function(req, res) {
 
 exports.canvas = function(req, res) {
     var id = req.url.substr(1),
+        external = /^(\/\/|https?:\/\/)/,
         path = '/visualizations/' + id + '/',
         json = getConfigJson(id),
         files = json.js || [];
 
     _.each(files, function(file, i) {
-        files[i] = path + file;
+        var p = external.test(file) ? '' : path;
+        files[i] = p + file;
     });
 
     res.render('canvas.jade', { js: path + 'client.js', files: files });
