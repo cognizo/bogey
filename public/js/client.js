@@ -52,6 +52,7 @@ $(document).ready(function() {
     function visualize(state) {
         if (state.action === 'home') {
             if ($iframe) {
+                $iframe.get(0).contentWindow.Bogey.closeSocket();
                 $iframe.contents().find('canvas')
                     .addClass('hidden')
                     .on('transitionend webkitTransitionEnd oTransitionEnd otransitionend', function() {

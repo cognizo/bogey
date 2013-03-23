@@ -32,6 +32,9 @@
         },
         onClose: function(func) {
             close = func;
+        },
+        closeSocket: function() {
+            socket.disconnect();
         }
     };
 
