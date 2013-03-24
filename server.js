@@ -12,7 +12,7 @@ nconf.file({ file: 'config.json' });
 nconf.defaults({
     logs: [],
     port: 8008,
-    ipsum: 0
+    ipsum: false
 });
 
 var config = nconf.get();
