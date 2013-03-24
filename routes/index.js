@@ -29,6 +29,7 @@ exports.index = function(req, res) {
                     visualizations.push(json);
                 }
             });
+            visualizations = _.sortBy(visualizations, 'name');
             res.render('index.jade', { visualizations: visualizations });
         }
     });
