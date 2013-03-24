@@ -81,7 +81,7 @@
             frames++;
             if (frames % 10 === 0) {
                 fps = Math.round(1000 / (delta ? delta : 1));
-                rpms = Math.ceil(requestsSinceLastTime / (time - requestsLastTime) * 1000);
+                rpms = Math.ceil(requestsSinceLastTime / (time - requestsLastTime) * 1000 * 60);
                 requestsSinceLastTime = 0;
                 requestsLastTime = time;
             }
