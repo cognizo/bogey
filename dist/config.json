@@ -1,0 +1,8 @@
+{
+  "visualizations": [
+    {
+      "src": "/visualizations/bogey-pong/index.js",
+      "module": "bogey-pong"
+    }
+  ]
+}
