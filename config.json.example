@@ -1,6 +1,0 @@
-{
-    "logs": [],
-    "port": 8008
-    // to enable test mode:
-    // "ipsum": { "amplitude": 15, "period": 30 }
-}
