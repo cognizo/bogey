@@ -7,28 +7,7 @@ var uglify = require('gulp-uglify');
 var argv = require('yargs').argv;
 
 var rebundle = function (bundler) {
-    return bundler.bundle()
-        .on('error', notify.onError({
-            title: 'Browserify Error',
-            message: '<%= error.message %>',
-            emitError: true
-        }))
-        .on('error', function () {
-            this.emit('end');
-        })
-        .pipe(source('app.js'))
-        .pipe(gulp.dest('dist/js/'));
-};
-
-module.exports.rebundle = rebundle;
-
-gulp.task('browserify', function () {
-    return rebundle(browserify('./app/js/app.js'));
-});
-
-gulp.task('browserify', function () {
-    var stream = browserify('./app/js/app.js')
-        .bundle()
+    var stream = bundler.bundle()
         .on('error', notify.onError({
             title: 'Browserify Error',
             message: '<%= error.message %>',
@@ -39,9 +18,15 @@ gulp.task('browserify', function () {
         })
         .pipe(source('app.js'));
 
-    if (argv.release) {
-        stream = stream.pipe(streamify(uglify()));
-    }
+        if (argv.release) {
+            stream = stream.pipe(streamify(uglify()));
+        }
 
-    return stream.pipe(gulp.dest('dist/js/'));
+        return stream.pipe(gulp.dest('dist/js/'));
+};
+
+module.exports.rebundle = rebundle;
+
+gulp.task('browserify', function () {
+    return rebundle(browserify('./app/js/app.js'));
 });
