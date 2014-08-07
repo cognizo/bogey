@@ -6,7 +6,7 @@ var visualizations = [ 'bogey-pong' ];
 var config;
 
 try {
-    config = require(path.resolve(__dirname, '../../config.json'));
+    config = require(path.resolve(__dirname, '../config.json'));
 } catch (err) {
     config = [];
 }
