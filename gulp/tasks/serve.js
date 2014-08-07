@@ -7,7 +7,7 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var rebundle = require('./browserify').rebundle;
 
-gulp.task('serve', [ 'app', 'less' ], function (callback) {
+gulp.task('serve', [ 'app', 'less', 'visualizations' ], function (callback) {
     var bundler = watchify(browserify('./app/js/app.js', watchify.args));
 
     bundler.on('update', function () {
