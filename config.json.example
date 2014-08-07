@@ -1,6 +1,18 @@
 {
-    "logs": [],
-    "port": 8008
-    // to enable test mode:
-    // "ipsum": { "amplitude": 15, "period": 30 }
+    "port": 8008,
+
+    "logs": [
+        {
+            "file": "/var/log/nginx/access.log",
+            "regexp": "apache-combined"
+        },
+        {
+            "file": "/var/log/my-custom.log",
+            "regexp": "my-regexp"
+        }
+    ],
+
+    "regexp": {
+        "my-regexp": "/(:<myAttr>.*) (:<myOtherAttr>.*)/"
+    }
 }

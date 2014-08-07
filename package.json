@@ -1,20 +1,53 @@
 {
-    "name": "bogey",
-    "description": "Bogey - Web server log visualization that runs in the browser.",
-    "version": "0.0.1",
-
-    "contributors": [
-        { "name": "Aaron Baluczynski" },
-        { "name": "Graham Floyd" }
-    ],
-
-    "dependencies": {
-        "express": "3.1.x",
-        "jade": "0.28.x",
-        "underscore": "1.4.x",
-        "socket.io": "0.9.x",
-        "nconf": "0.6.x"
-    },
-
-    "private": true
+  "name": "bogey",
+  "description": "Log visualization that runs in the browser.",
+  "keywords": [
+    "logs",
+    "visualization"
+  ],
+  "version": "0.1.0",
+  "main": "lib/bogey.js",
+  "bin": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cognizo/bogey.git"
+  },
+  "scripts": {
+    "build": "gulp build"
+  },
+  "contributors": [
+    "Aaron Baluczynski",
+    "Graham Floyd <grahamf@gmail.com>",
+    "Ben Tyler"
+  ],
+  "dependencies": {
+    "bogey-pong": "^0.1.0",
+    "browserify": "^5.9.1",
+    "express": "3.1.x",
+    "jquery": "^2.1.1",
+    "named-regexp": "^0.1.1",
+    "socket.io": "^1.0.6",
+    "underscore": "^1.6.0",
+    "yargs": "^1.3.1"
+  },
+  "devDependencies": {
+    "async": "^0.9.0",
+    "brfs": "1.0.2",
+    "browser-resolve": "^1.3.2",
+    "browser-sync": "^1.3.0",
+    "del": "^0.1.1",
+    "glob": "^4.0.5",
+    "gulp": "^3.8.7",
+    "gulp-autoprefixer": "0.0.8",
+    "gulp-concat": "^2.3.4",
+    "gulp-less": "^1.3.2",
+    "gulp-minify-css": "^0.3.7",
+    "gulp-nodemon": "^1.0.4",
+    "gulp-notify": "^1.4.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-streamify": "0.0.5",
+    "gulp-uglify": "^0.3.1",
+    "vinyl-source-stream": "^0.1.1",
+    "watchify": "^1.0.1"
+  }
 }
