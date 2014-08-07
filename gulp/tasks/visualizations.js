@@ -33,10 +33,8 @@ gulp.task('visualizations', function (callback) {
                 }))
                 .on('error', function () {
                     this.emit('end')
-                });
-            }
-
-            stream = stream.pipe(source('index.js'));
+                })
+                .pipe(source('index.js'));
 
             if (argv.release) {
                 stream = stream.pipe(streamify(uglify()));
