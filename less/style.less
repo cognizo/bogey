@@ -1,0 +1,85 @@
+@import 'http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700';
+@import '../node_modules/bootstrap/less/bootstrap.less';
+
+@font-size-base: 16px;
+@body-bg: #232c31;
+@link-color: #faa520;
+@component-active-bg: #66757D;
+@nav-link-hover-bg: @body-bg;
+@pre-bg: darken(@body-bg, 5%);
+@pre-color: #ddd;
+@pre-border-color: lighten(@body-bg, 5%);
+@code-bg: @pre-bg;
+@code-color: @pre-color;
+@code-border-color: @pre-border-color;
+
+html, body {
+    color: #eee;
+    -webkit-font-smoothing: antialiased;
+}
+
+div.page-header {
+    background-color: #151b1e;
+    background-image: url('/images/background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    margin-top: 0;
+    padding-top: 40px;
+    padding-bottom: 60px;
+    opacity: 1;
+    border-color: lighten(@body-bg, 5%);
+    text-align: center;
+
+    .inner {
+        display: inline-block;
+        padding: 20px 0;
+        //background: @body-bg;
+        //border: 1px solid lighten(@body-bg, 5%);
+        border-radius: 4px;
+    }
+}
+
+.nav > li > a {
+    background: @body-bg;
+    border: 1px solid lighten(@body-bg, 10%);
+    margin-right: 8px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+h1, h2, h3, h4, h5 {
+    font-weight: 700;
+    font-family: 'PT Sans Narrow', sans-serif;
+}
+
+h3 {
+    margin-top: 45px;
+}
+
+h4 {
+  margin-top: 25px;
+}
+
+div.install-steps > div {
+    border: 1px solid lighten(@body-bg, 10%);
+    padding: 0 20px 10px 20px;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+footer {
+    margin-top: 40px;
+    background: darken(@body-bg, 5%);
+    padding: 50px 0 40px;
+    text-align: center;
+    border-top: 1px solid lighten(@body-bg, 5%);
+}
+
+img {
+    border: 1px solid lighten(@body-bg, 10%);
+    border-radius: 4px;
+    margin: 20px 0;
+}

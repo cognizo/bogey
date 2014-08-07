@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Bogey</title>
+
+    <link href="dist/css/style.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <div class="page-header">
+        <div class="container">
+            <span class="inner">
+                <h1>Bogey</h1>
+                <p class="lead">Log visualization that runs in the browser.</p>
+
+                <ul class="nav nav-pills">
+                    <li><a href="/#install">Install</a></li>
+                    <li><a href="https://github.com/cognizo/bogey#usage">Documentation</a></li>
+                    <li><a href="/demo/#/home">Demo</a></li>
+                    <li><a href="https://github.com/cognizo/bogey">GitHub Project</a></li>
+                </ul>
+            </span>
+        </div>
+    </div>
+    <div class="container">
+        <h3>Visualize your logs</h3>
+        <p>Bogey is a web-based log visualization framework. It makes it really easy to create visualizations from your
+            log files.</p>
+        <p>It's totally free and open source. Check out a <a href="/demo/#/Pong">demo of Bogey Pong</a>,
+            the visualization that ships with Bogey.</p>
+
+        <section id="install">
+        <h3>Install</h3>
+        <div class="install-steps">
+            <div>
+                <h4>1. Install Node.js</h4>
+                <p>Bogey is a module for <a href="http://nodejs.org/">Node.js</a>. There are
+                   <a href="http://nodejs.org/download/">installation packages</a> available for most platforms.</p>
+            </div>
+            <div>
+                <h4>2. Install Bogey</h4>
+                <pre>npm install -g bogey</pre>
+            </div>
+            <div>
+                <h4>3. Start Bogey</h4>
+                <p>Start Bogey and give it a log file to watch.</p>
+                <pre>bogey -f /var/log/nginx/access.log:apache-combined</pre>
+                <p>Check out the <a href="https://github.com/cognizo/bogey#usage">documentation</a> for more examples.</p>
+            </div>
+            <div>
+                <h4>4. Open your browser</h4>
+                <p>Open your browser and point it to <code>http://localhost:8008</code>.</p>
+            </div>
+        </div>
+        <section>
+
+        <h3>Visualizations</h3>
+        <p>Bogey ships with <a href="https://github.com/cognizo/bogey-pong">Bogey Pong</a>, a Pong-like visualization
+            for web server access logs heavily inspired by the awesome
+        <a href="https://code.google.com/p/logstalgia/">Logstalgia</a>.
+
+        <h4>Bogey Pong</h4>
+
+        <img src="/images/bogey-pong/bogey.png" class="img-responsive">
+
+        <p>Bogey Pong represents web server traffic as a giant pong game. Every request is a ball, with successful
+            requests (<code>200</code> status codes) being returned by the paddle. <code>400</code> status codes are
+            misses and <code>500</code> status codes are screen-shaking explosions.</p>
+
+        <p>Requests are grouped together by IP address and floods of requests from the same client are represented as
+            long streams of balls. This makes it really easy to pick out strange or suspicious traffic patterns.</p>
+
+        <p>Bogey Pong uses the <a href="http://phaser.io/">Phaser</a> game engine.</p>
+
+        <p>It also comes with a bunch of themes based on popular programming color schemes.</p>
+
+        <h3>More coming soon</h3>
+        <p>More visualizations are coming soon.</p>
+        <p>The goal of Bogey is to make it really easy to create great visualizations from your logs. Check out the
+            <a href="https://github.com/cognizo/bogey#creating-visualizations">documentation</a> to get started creating your own.</p>
+    </div>
+    <footer>
+        <div class="container">
+            <p>Bogey was created by <a href="http://cognizo.com/">Cognizo</a>.</p>
+            <p>Bogey is available under the <a href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+        </div>
+    </footer>
+</body>
+</html>
