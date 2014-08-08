@@ -79,7 +79,6 @@ if (!logs || !logs.length) {
 }
 
 if (!logs || !logs.length) {
-    console.warn('No files specified to tail. Only demo mode will be available.');
     logs = [];
 }
 
@@ -96,12 +95,23 @@ logs.forEach(function (log) {
     log.regexp = eval(regexp);
 });
 
+var io;
+var bogey;
+
 var app = express();
 app.use(express.static(__dirname + '/dist'));
+
+app.use(express.bodyParser());
+app.post('/log', function (req, res) {
+    bogey.emit(req.body);
+
+    res.send(200);
+});
 
 var server = app.listen(port);
 
 io = io(server);
 
-var bogey = new Bogey(io);
+bogey = new Bogey(io);
+
 bogey.start(logs);
