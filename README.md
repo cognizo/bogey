@@ -53,7 +53,8 @@ See `config.json.example` for an example configuration.
 Watch a file. Specify the file in the format `filename:regexp-name`. Bogey comes with a regular expression
 for parsing files in the [Common Log Format](http://en.wikipedia.org/wiki/Common_Log_Format), but it's
 easy to add your own. See the [regular expressions](#regular-expressions) section for details. This
-setting is optional, but if no logs are specified only [demo mode](#demo-mode) will be available.
+setting is optional, but if no logs are specified only [demo mode](#demo-mode) or [HTTP POSTs](#using-with-logstash)
+will be available.
 
     -p <port> Port
 
@@ -181,7 +182,7 @@ Note that in the case of `pause`, `play`, `speedUp`, `slowDown`, `defaultSpeed` 
 visualization module to act on each of these requests.
 
 You also don't have to use Bogey's render loop. If you choose to use a different engine, you can ignore
-the `frame` event and implement your own. For example, the [bogey-pong](https://github.com/cognizo/bogey-pong)
+the `frame` event and implement your own. For example, the [Bogey Pong](https://github.com/cognizo/bogey-pong)
 module uses the [Phaser](http://phaser.io/) engine which has its own render loop.
 
 ### Visualization development
