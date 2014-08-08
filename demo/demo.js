@@ -1,6 +1,6 @@
 var $ = require('jquery');
-var bogeyPong = require('/var/www/bogey-pong');
-var bogeyWeb = require('/var/www/bogey-web');
+var bogeyPong = require('bogey-pong');
+var bogeyWeb = require('bogey-web');
 
 $(document).ready(function () {
     window.App = bogeyWeb({

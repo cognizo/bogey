@@ -4,6 +4,8 @@
   "description": "Bogey web site.",
   "main": "gulpfile.js",
   "dependencies": {
+    "bogey-pong": "^0.1.0",
+    "bogey-web": "^0.1.0",
     "bootstrap": "^3.2.0",
     "browserify": "^5.9.1",
     "gulp": "^3.8.7",

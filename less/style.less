@@ -34,9 +34,18 @@ div.page-header {
     .inner {
         display: inline-block;
         padding: 20px 0;
-        //background: @body-bg;
-        //border: 1px solid lighten(@body-bg, 5%);
         border-radius: 4px;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding-top: 20px;
+        padding-bottom: 30px;
+    }
+}
+
+.nav {
+    @media screen and (max-width: 768px) {
+        margin-left: 30px;
     }
 }
 
@@ -44,9 +53,12 @@ div.page-header {
     background: @body-bg;
     border: 1px solid lighten(@body-bg, 10%);
     margin-right: 8px;
-
     &:hover {
         text-decoration: underline;
+    }
+
+    @media screen and (max-width: 768px) {
+        margin-top: 10px;
     }
 }
 
