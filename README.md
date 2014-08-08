@@ -98,6 +98,27 @@ Or in your `config.json` like:
 Check the [named-regexp documentation](https://www.npmjs.org/package/named-regexp) for details on the
 named capture syntax.
 
+## Using with Logstash
+
+If you're using Logstash, Bogey supports receiving log data via HTTP POST.
+
+Just enable the [http output](http://logstash.net/docs/latest/outputs/http) and map the data so that
+Bogey understands it.
+
+Here's an example Logstash configuration using the COMBINEDAPACHELOG grok filter:
+
+    output {
+        http {
+            http_method => "post"
+            mapping => {
+                "ip" => "%{clientip}"
+                "uri" => "%{request}"
+                "statusCode" => "%{response}"
+            }
+            url => "http://bogey-host:8008/log"
+        }
+    }
+
 ## Demo mode
 
 Bogey comes with a demo mode that runs in the browser and creates fake log data. You can enable it by
