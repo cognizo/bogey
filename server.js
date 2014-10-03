@@ -39,12 +39,12 @@ var visualizations = argv.visualization || config.visualizations || [ '/var/www/
 // Set up regular expressions.
 var regexps = {
     "apache-combined": "/(:<ip>.*) - - \\[(:<timestamp>.*)\\] \"(:<method>.*) (:<uri>.*) (:<protocol>.*)\"" +
-        " (:<statusCode>[0-9]*) (:<responseSize>[0-9]*) \"(:<referrer>.*)\" \"(:<userAgent>.*)\"/"
+        " (:<statusCode>[0-9]*) (:<responseSize>[0-9]*|-) \"(:<referrer>.*)\" \"(:<userAgent>.*)\"/"
 };
 
 if (config.regexp) {
     for (var name in config.regexp) {
-        regexps[name] = regexp;
+        (config.regexp[name]) && (regexps[name] = config.regexp[name]);
     }
 }
 
